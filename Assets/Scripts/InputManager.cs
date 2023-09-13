@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,16 @@ public class InputManager : MonoBehaviour
     private Vector3 lastPosition;
 
     [SerializeField] LayerMask placementLayerMask;
+
+    public event Action OnClicked, OnExit;
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+            OnExit?.Invoke();
+        if(Input.GetMouseButtonDown(0))
+            OnClicked?.Invoke();
+    }
 
     public Vector3 GetSelectedMapPosition()
     {

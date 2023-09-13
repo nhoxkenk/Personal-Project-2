@@ -8,14 +8,21 @@ public class PlayerController : MonoBehaviour
     float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     CharacterController characterController;
+    PlacementSystem placementSystem;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        placementSystem = GameObject.Find("PlacementSystem").GetComponent<PlacementSystem>();
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            placementSystem.StartPlacement(0);
+        }
+
         // Lấy thông tin về phím từ bàn phím
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
