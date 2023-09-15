@@ -29,7 +29,6 @@ public class PlacementSystem : MonoBehaviour
             return;
         }
         gridVisulization.SetActive(true);
-        mouseIndicator.SetActive(true);
         cellIndicator.SetActive(true);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
@@ -47,7 +46,6 @@ public class PlacementSystem : MonoBehaviour
     {
         selectedObjectIndex = -1;
         gridVisulization.SetActive(false);
-        mouseIndicator.SetActive(false);
         cellIndicator.SetActive(false);
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
@@ -59,7 +57,6 @@ public class PlacementSystem : MonoBehaviour
         if(selectedObjectIndex == -1) { return; }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        mouseIndicator.transform.position = mousePosition;
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
     }
 }

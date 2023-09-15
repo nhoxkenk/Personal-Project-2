@@ -25,7 +25,7 @@ public class SpawnEnemy : MonoBehaviour
     void SpawnEnemies()
     {
         Vector3 randomPos = Random.insideUnitSphere * spawnRadius;
-        Vector3 enemyPos = new Vector3(spawnPosition.x + randomPos.x, 0f, spawnPosition.z + randomPos.z);
+        Vector3 enemyPos = new Vector3(spawnPosition.x + randomPos.x, 0.3481212f, spawnPosition.z + randomPos.z);
 
         GameObject enemy = Instantiate(enemyPrefabs, enemyPos, transform.rotation);
         EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
