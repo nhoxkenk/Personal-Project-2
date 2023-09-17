@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float moveSpeed = 5.0f;  // Tốc độ di chuyển của nhân vật
-    float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-    CharacterController characterController;
-    PlacementSystem placementSystem;
+    [SerializeField]
+    private Transform graphics;
+
+    [SerializeField]
+    private float rotationSpeed = 5f;
+
+    public float moveSpeed = 5.0f;  // Tốc độ di chuyển của nhân vật
+
+    private CharacterController characterController;
+    private PlacementSystem placementSystem;
+    Vector3 direction;
 
     private void Start()
     {
@@ -18,26 +24,39 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            placementSystem.StartPlacement(0);
-        }
-
         // Lấy thông tin về phím từ bàn phím
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
 
         // Tạo vector di chuyển dựa trên thông tin phím
-        Vector3 direction = new Vector3(horizontalInput, 0.0f, verticalInput).normalized;
+        direction = new Vector3(horizontalInput, 0.0f, verticalInput).normalized;
 
-        if (direction.magnitude > 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        Vector3 vector = GetMousePosition(Input.mousePosition) - base.transform.position;
+        vector.y = 0f;
+        float y = Mathf.Atan2(vector.x, vector.z) * 57.29578f;
+        Quaternion b = Quaternion.Euler(0f, y, 0f);
+        graphics.transform.rotation = Quaternion.Slerp(graphics.transform.rotation, b, rotationSpeed * Time.deltaTime);
 
-            characterController.Move(direction * moveSpeed * Time.deltaTime);
-        }
+        if (Input.GetKeyDown(KeyCode.P))
+            placementSystem.StartPlacement(0);
     }
 
+    private void FixedUpdate()
+    {
+        // Di chuyển nhân vật
+        characterController.Move(direction * moveSpeed * Time.deltaTime);
+    }
+
+    private Vector3 GetMousePosition(Vector3 position)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(position);
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        Vector3 result = Vector3.zero;
+        if (plane.Raycast(ray, out var enter))
+        {
+            result = ray.GetPoint(enter);
+        }
+        result.y = transform.position.y; // Giữ độ cao của nhân vật không thay đổi
+        return result;
+    }
 }

@@ -22,4 +22,5 @@ public class EnemyMovement : MonoBehaviour
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }
     }
+
 }

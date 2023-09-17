@@ -5,16 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Tile
+  - Water
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Characters
   - Water
   - UI
-  - 
-  - 
-  - 
+  - InvisibleWall
+  - Enemy
+  - Tile
   - 
   - 
   - 

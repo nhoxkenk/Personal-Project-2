@@ -5,15 +5,17 @@ using UnityEngine;
 public class SpawnEnemy : MonoBehaviour
 {
     public GameObject enemyPrefabs;
-    [SerializeField] float spawnRadius = 25.0f;
+    [SerializeField] float spawnRadius = 5.0f;
     [SerializeField] float moveSpeed = 2.0f;
+    [SerializeField]
+    private float spawnRate = 0.5f;
 
     private Vector3 spawnPosition;
     // Start is called before the first frame update
     void Start()
     {
         spawnPosition = transform.position;
-        InvokeRepeating("SpawnEnemies", 0.0f, 1.0f);
+        InvokeRepeating("SpawnEnemies", 0.0f, spawnRate);
     }
 
     // Update is called once per frame
@@ -24,8 +26,9 @@ public class SpawnEnemy : MonoBehaviour
 
     void SpawnEnemies()
     {
-        Vector3 randomPos = Random.insideUnitSphere * spawnRadius;
-        Vector3 enemyPos = new Vector3(spawnPosition.x + randomPos.x, 0.3481212f, spawnPosition.z + randomPos.z);
+        float y = Random.Range(0f, 360f);
+
+        Vector3 enemyPos = base.transform.position + Quaternion.Euler(0f, y, 0f) * Vector3.forward * spawnRadius;
 
         GameObject enemy = Instantiate(enemyPrefabs, enemyPos, transform.rotation);
         EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
