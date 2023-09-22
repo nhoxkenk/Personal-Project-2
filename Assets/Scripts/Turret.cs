@@ -6,33 +6,39 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] float shootingInterval = 1.0f;
-    [SerializeField] float shootingRange = 10f;
-    [SerializeField] Transform arrowSpawnPoint;
+    [SerializeField] float shootingRange = 5f;
+    [SerializeField] Transform bulletSpawnPoint;
+    [SerializeField] Transform partRotate;
 
     private List<GameObject> enemies = new List<GameObject>();
     private float nextShotTime;
-    private float scanRadius = 10f;
-
+    private float scanRadius = 5f;
+    GameObject nearestEnemy;
 
     private void Update()
     {
         detectedEnemies();
-        Debug.Log(enemies.Count);
-        if(enemies.Count > 0)
-        {
-            GameObject nearestEnemy = GetNearestEnemy();
 
-            if(nearestEnemy != null)
-            {
-                Vector3 direction = nearestEnemy.transform.position - transform.position;
-                direction.y = 0;
-                if(Time.time > nextShotTime && direction.magnitude <= shootingRange)
-                {
-                    ShootArrow(nearestEnemy.transform, direction);
-                    nextShotTime = Time.time + shootingInterval;
-                }
-            }
+        nearestEnemy = GetNearestEnemy();
+
+        if(nearestEnemy == null)
+        {
+            return;
+                
         }
+
+        Vector3 direction = nearestEnemy.transform.position - transform.position;
+
+        direction.y = 0;
+        if (Time.time > nextShotTime && direction.magnitude <= shootingRange)
+        {
+            ShootBullet(nearestEnemy.transform, direction);
+            nextShotTime = Time.time + shootingInterval;
+        }
+
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        Vector3 rotation = lookRotation.eulerAngles;
+        partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
 
     }
 
@@ -70,9 +76,9 @@ public class Turret : MonoBehaviour
         return nearestEnemy;
     }
 
-    void ShootArrow(Transform target, Vector3 direction)
+    void ShootBullet(Transform target, Vector3 direction)
     {
-        GameObject bulletGO = Instantiate(arrowPrefab, arrowSpawnPoint.position, Quaternion.LookRotation(direction));
+        GameObject bulletGO = Instantiate(arrowPrefab, bulletSpawnPoint.position, Quaternion.LookRotation(direction));
         Bullet bullet = bulletGO.GetComponent<Bullet>();
         if(bullet != null)
         {
