@@ -20,7 +20,6 @@ public class Tile : MonoBehaviour
 
     private float prevHealthAmount;
 
-
     private void Start()
     {
         health = GetComponent<TileHealth>();
@@ -49,6 +48,8 @@ public class Tile : MonoBehaviour
             attacker = null;
             isBeingAttacked = false;
             Destroy(gameObject);
+            Destroy(tileObject);
         }
     }
+
 }

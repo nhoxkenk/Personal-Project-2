@@ -10,6 +10,7 @@ TagManager:
   - EnemyWeapon
   - Grid
   - PlayerWeapon
+  - Turret
   layers:
   - Default
   - TransparentFX

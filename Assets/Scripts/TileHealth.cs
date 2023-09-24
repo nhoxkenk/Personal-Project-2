@@ -37,13 +37,11 @@ public class TileHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit");
         string[] array = damageTags;
         foreach (string text in array)
         {
             if (other.CompareTag(text))
             {
-                Debug.Log(text);
                 Damage component2 = other.transform.GetComponent<Damage>();
                 TakeDamage(component2.amount);
             }
