@@ -88,7 +88,7 @@ Transform:
   - {fileID: 6320379771621597861}
   - {fileID: 1032569908173395797}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2798663738062265677
 GameObject:
@@ -236,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1032569908173395797}
   - component: {fileID: 5222824022979105243}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Trigger
   m_TagString: Water
   m_Icon: {fileID: 0}

@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4221534783304484}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Tail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4364057295064714}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Jaw_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4293738025539477}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: JawConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4235704650708729}
   - component: {fileID: 136495554252420878}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,14 +174,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.006
-  m_Height: 0.043587748
+  m_Height: 0.051051386
   m_Direction: 1
-  m_Center: {x: -0.001, y: -0.018206125, z: 8.1171964e-10}
+  m_Center: {x: -0.0009999999, y: -0.014474308, z: 1.4441874e-10}
 --- !u!1 &1315122805414731
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4021430594489782}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4132780217286463}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Jaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4507154168957226}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4565107633088886}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4168838810280376}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Tail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4365687608388746}
   - component: {fileID: 137963011822632403}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: SharkV1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -475,7 +475,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4117231301631470}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Shark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,6 +512,7 @@ GameObject:
   - component: {fileID: 54887563586901842}
   - component: {fileID: 5885886430694733675}
   - component: {fileID: 5101428302910711473}
+  - component: {fileID: 5055425805730898729}
   m_Layer: 7
   m_Name: Shark
   m_TagString: Enemy
@@ -536,7 +537,7 @@ Transform:
   - {fileID: 4565107633088886}
   - {fileID: 4189027699325802}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!65 &65590405196248429
 BoxCollider:
@@ -604,6 +605,7 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   isAttacking: 0
+  isDead: 0
 --- !u!95 &5101428302910711473
 Animator:
   serializedVersion: 5
@@ -625,6 +627,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5055425805730898729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649553414575515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28dda01492daa524c91cd150dbf40fc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  amount: 0
+  damageTags:
+  - PlayerWeapon
+  - CannonBall
+  invisibleWallPrefab: {fileID: 2526948148950268763, guid: d116edc2dc9e1c14b982744dde4cd1b8, type: 3}
 --- !u!1 &1686451754807049
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +654,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4702466563761199}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Tail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -714,7 +734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804592959879465}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.01, z: 0}
+  m_LocalPosition: {x: -0.00007, y: 0.01165, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -738,10 +758,10 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.006
-  m_Center: {x: -0.002, y: -0.007, z: 0}
+  m_Radius: 0.0022241129
+  m_Center: {x: -0.0021492296, y: -0.00535353, z: -0.000005303387}
 --- !u!114 &7551159381650083247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,7 +785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4063918741892263}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Tail3_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -796,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4600280437508352}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -65,7 +65,7 @@ Transform:
   m_Children:
   - {fileID: 1494964708220313099}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4527467035057011886
 MonoBehaviour:
@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrowPrefab: {fileID: 9092390974050758006, guid: 60c6ed6fc49ead842900fdc4ece62952, type: 3}
   shootingInterval: 1
-  shootingRange: 5
+  shootingRange: 10
   bulletSpawnPoint: {fileID: 1093488228236373191}
   partRotate: {fileID: 1494964708220313099}
 --- !u!65 &5788642621259607314

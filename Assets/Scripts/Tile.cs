@@ -6,8 +6,6 @@ public class Tile : MonoBehaviour
 {
     public GameObject tileObject;
 
-    public Vector2 coordinates;
-
     private TileHealth health;
 
     public bool isBeingAttacked;

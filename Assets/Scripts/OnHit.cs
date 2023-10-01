@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class OnHit : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(1);
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log(2);
             Destroy(collision.gameObject);
         }
     }

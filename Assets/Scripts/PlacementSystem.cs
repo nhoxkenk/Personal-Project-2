@@ -41,7 +41,7 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         GameObject gameObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        gameObject.transform.position = grid.CellToWorld(gridPosition) + new Vector3(0, 0, 0.2f);
+        gameObject.transform.position = grid.CellToWorld(gridPosition) + new Vector3(0.2f, 0, 0.2f);
         checkTile(gameObject.transform);
     }
 
@@ -65,12 +65,17 @@ public class PlacementSystem : MonoBehaviour
             Debug.Log("Đối tượng đang đặt chồng lên đối tượng khác.");
             GameObject hitObject = hit.collider.gameObject;
 
-            // Lấy đối tượng cha của đối tượng trả về
             Transform parentObject = hitObject.transform.parent;
 
             if (parentObject != null)
             {
                 Debug.Log("Đối tượng cha: " + parentObject.name);
+                Tile tile = parentObject.GetComponent<Tile>();
+                if(tile.tileObject != null)
+                {
+                    Destroy(tile.tileObject);
+                }
+                tile.tileObject = transform.gameObject;
             }
             else
             {

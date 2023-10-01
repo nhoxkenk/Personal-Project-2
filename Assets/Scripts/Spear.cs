@@ -6,7 +6,7 @@ public class Spear : MonoBehaviour
 {
     public float attackDuration = 0.5f;
 
-    public int damageAmount = 1;
+    public int damageAmount = 50;
 
     private Animator animator;
 

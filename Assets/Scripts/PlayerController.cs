@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,14 +13,19 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 5.0f;  // Tốc độ di chuyển của nhân vật
 
+    private List<Tile> lastTilesTouched = new List<Tile>();
+
     private CharacterController characterController;
     private PlacementSystem placementSystem;
+    [SerializeField] private GameManager gameManager;
     Vector3 direction;
+    Rigidbody rb;
 
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
         placementSystem = GameObject.Find("PlacementSystem").GetComponent<PlacementSystem>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -44,7 +50,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // Di chuyển nhân vật
-        characterController.Move(direction * moveSpeed * Time.deltaTime);
+        //characterController.Move(direction * moveSpeed * Time.deltaTime);
+        Vector3 vector = direction * moveSpeed;
+        rb.velocity = new Vector3(vector.x, rb.velocity.y, vector.z);
+        //TileDetec();
     }
 
     private Vector3 GetMousePosition(Vector3 position)
@@ -58,5 +67,58 @@ public class PlayerController : MonoBehaviour
         }
         result.y = transform.position.y; // Giữ độ cao của nhân vật không thay đổi
         return result;
+    }
+
+    void TileDetec()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.1f))
+        {
+            if (hit.transform.CompareTag("Tile"))
+            {
+                if (lastTilesTouched.Count >= 3)
+                {
+                    lastTilesTouched.RemoveAt(0);
+                }
+                lastTilesTouched.Add(hit.transform.gameObject.GetComponent<Tile>());
+            }
+            foreach (var tile in lastTilesTouched)
+            {
+                Debug.Log(tile.name);
+            }
+        }
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.transform.CompareTag("Tile"))
+        {
+            Debug.Log("Tile");
+            if (lastTilesTouched.Count >= 3)
+            {
+                lastTilesTouched.RemoveAt(0);
+            }
+            lastTilesTouched.Add(collision.gameObject.GetComponent<Tile>());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            Debug.Log("Stuck");
+            gameManager.SpawnPlayer(lastTilesTouched);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            Debug.Log("Stuck");
+            gameManager.SpawnPlayer(lastTilesTouched);
+        }
     }
 }

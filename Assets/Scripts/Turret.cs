@@ -29,16 +29,20 @@ public class Turret : MonoBehaviour
 
         Vector3 direction = nearestEnemy.transform.position - transform.position;
 
-        direction.y = 0;
-        if (Time.time > nextShotTime && direction.magnitude <= shootingRange)
-        {
-            ShootBullet(nearestEnemy.transform, direction);
-            nextShotTime = Time.time + shootingInterval;
-        }
+        //direction.y = 0;
 
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = lookRotation.eulerAngles;
-        partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
+        if (!nearestEnemy.GetComponent<EnemyMovement>().isDead)
+        {
+            if (Time.time > nextShotTime && direction.magnitude <= shootingRange)
+            {
+                ShootBullet(nearestEnemy.transform, direction);
+                nextShotTime = Time.time + shootingInterval;
+            }
+
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Vector3 rotation = lookRotation.eulerAngles;
+            partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
+        }
 
     }
 

@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour
     public Transform target;
 
     public bool isAttacking;
+    public bool isDead;
 
     private void Start()
     {
@@ -150,6 +151,19 @@ public class EnemyMovement : MonoBehaviour
         else
         {
             FindNewTarget();
+        }
+    }
+
+    public void Die()
+    {
+        isDead = true;
+        //coinSpawner.spawnPosition = base.transform.position + Vector3.up * 2f;
+        //coinSpawner.spawnCoins = true;
+        if (target != null)
+        {
+            Tile component = target.GetComponent<Tile>();
+            component.attacker = null;
+            component.isBeingAttacked = false;
         }
     }
 
