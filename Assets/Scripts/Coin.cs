@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    public Vector3 spawnPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,6 @@ public class Coin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Destroy(gameObject, 0.65f);
     }
 }

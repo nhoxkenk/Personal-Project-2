@@ -14,6 +14,7 @@ public class EnemyMovement : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     public Transform target;
+    private CoinSpawn coinSpawner;
 
     public bool isAttacking;
     public bool isDead;
@@ -22,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        coinSpawner = GetComponent<CoinSpawn>();
     }
 
     private void Update()
@@ -157,8 +159,8 @@ public class EnemyMovement : MonoBehaviour
     public void Die()
     {
         isDead = true;
-        //coinSpawner.spawnPosition = base.transform.position + Vector3.up * 2f;
-        //coinSpawner.spawnCoins = true;
+        coinSpawner.spawnPosition = base.transform.position + Vector3.up * 2f;
+        coinSpawner.isSpawnCoin = true;
         if (target != null)
         {
             Tile component = target.GetComponent<Tile>();

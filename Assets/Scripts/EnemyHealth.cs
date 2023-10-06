@@ -13,6 +13,7 @@ public class EnemyHealth : MonoBehaviour
     public GameObject invisibleWallPrefab;
 
     private EnemyMovement enemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +45,7 @@ public class EnemyHealth : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
+        //Debug.Log(other.tag);
         string[] array = damageTags;
         foreach (string text in array)
         {

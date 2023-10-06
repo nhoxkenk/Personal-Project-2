@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         
         if (collision.transform.CompareTag("Tile"))
         {
-            Debug.Log("Tile");
+            //Debug.Log("Tile");
             if (lastTilesTouched.Count >= 3)
             {
                 lastTilesTouched.RemoveAt(0);
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            Debug.Log("Stuck");
+            //Debug.Log("Stuck");
             gameManager.SpawnPlayer(lastTilesTouched);
         }
     }
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            Debug.Log("Stuck");
+            //Debug.Log("Stuck");
             gameManager.SpawnPlayer(lastTilesTouched);
         }
     }

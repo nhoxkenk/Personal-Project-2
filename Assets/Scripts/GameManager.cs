@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject player;
+    public TextMeshProUGUI coinText;
 
     private System.Random random = new System.Random();
+    private int coin = 0;
 
-    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
@@ -62,4 +65,11 @@ public class GameManager : MonoBehaviour
 
         return list;
     }
+
+    public void GetCoin(int amount)
+    {
+        coin += amount;
+        coinText.text = $"{coin}";
+    }
+
 }

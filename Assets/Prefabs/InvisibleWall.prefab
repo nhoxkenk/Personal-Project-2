@@ -62,9 +62,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2454622922716722504}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: InvisibleWall
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,7 +88,7 @@ Transform:
   - {fileID: 6320379771621597861}
   - {fileID: 1032569908173395797}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2798663738062265677
 GameObject:

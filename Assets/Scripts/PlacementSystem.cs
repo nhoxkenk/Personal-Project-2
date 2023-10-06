@@ -16,6 +16,8 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField] GameObject gridVisulization;
 
+    private bool canPlace = false;
+
     private void Start()
     {
         StopPlacement();
@@ -38,11 +40,15 @@ public class PlacementSystem : MonoBehaviour
 
     private void PlaceStructure()
     {
-        Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        GameObject gameObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        gameObject.transform.position = grid.CellToWorld(gridPosition) + new Vector3(0.2f, 0, 0.2f);
-        checkTile(gameObject.transform);
+        if(canPlace)
+        {
+            Vector3 mousePosition = inputManager.GetSelectedMapPosition();
+            Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+            GameObject gameObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
+            gameObject.transform.position = grid.CellToWorld(gridPosition);
+            PlaceOnTile(gameObject.transform);
+        }
+        
     }
 
     private void StopPlacement()
@@ -54,7 +60,7 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit -= StopPlacement;
     }
 
-    private void checkTile(Transform transform)
+    private void PlaceOnTile(Transform transform)
     {
         Ray ray = new Ray(transform.position, Vector3.down);
 
@@ -62,14 +68,12 @@ public class PlacementSystem : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, collisionLayer))
         {
-            Debug.Log("Đối tượng đang đặt chồng lên đối tượng khác.");
             GameObject hitObject = hit.collider.gameObject;
 
             Transform parentObject = hitObject.transform.parent;
 
             if (parentObject != null)
             {
-                Debug.Log("Đối tượng cha: " + parentObject.name);
                 Tile tile = parentObject.GetComponent<Tile>();
                 if(tile.tileObject != null)
                 {
@@ -77,23 +81,56 @@ public class PlacementSystem : MonoBehaviour
                 }
                 tile.tileObject = transform.gameObject;
             }
+
+        }
+
+    }
+
+    private bool CheckTile(Transform transform)
+    {
+        GameObject canPlaceIcon = cellIndicator.transform.Find("CanPlaceIcon").gameObject;
+        GameObject cannotPlaceIcon = cellIndicator.transform.Find("CannotPlaceIcon").gameObject;
+
+        Ray ray = new Ray(transform.position, Vector3.down);
+        //Vector3 mousePositionWithOffset = Input.mousePosition + new Vector3(0, 0, 0.5f);
+        //Ray ray = Camera.main.ScreenPointToRay(mousePositionWithOffset);
+
+        RaycastHit hit;
+
+        LayerMask layerMask = LayerMask.GetMask("Tile", "Water");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            int hitLayer = hit.collider.gameObject.layer;
+            string layerName = LayerMask.LayerToName(hitLayer);
+
+            Debug.Log("Tên layer của đối tượng được hit: " + layerName);
+
+            if (hitLayer == LayerMask.NameToLayer("Tile"))
+            {
+                cannotPlaceIcon.SetActive(false);
+                canPlaceIcon.SetActive(true);
+                return true;
+            }
             else
             {
-                Debug.Log("Không có đối tượng cha.");
+                cannotPlaceIcon.SetActive(true);
+                canPlaceIcon.SetActive(false);
             }
         }
-        else
-        {
-            Debug.Log("Đối tượng không đặt chồng lên đối tượng khác.");
-        }
+
+        return false;
     }
+
 
     // Update is called once per frame
     void Update()
     {
         if(selectedObjectIndex == -1) { return; }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
+        mouseIndicator.transform.position = mousePosition;
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+        canPlace = CheckTile(mouseIndicator.transform);
     }
 }

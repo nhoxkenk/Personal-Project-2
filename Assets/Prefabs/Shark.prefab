@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4235704650708729}
   - component: {fileID: 136495554252420878}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,9 +179,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.006
-  m_Height: 0.051051386
+  m_Height: 0.051323533
   m_Direction: 1
-  m_Center: {x: -0.0009999999, y: -0.014474308, z: 1.4441874e-10}
+  m_Center: {x: -0.001, y: -0.014338235, z: 1.2008691e-10}
 --- !u!1 &1315122805414731
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,12 +513,13 @@ GameObject:
   - component: {fileID: 5885886430694733675}
   - component: {fileID: 5101428302910711473}
   - component: {fileID: 5055425805730898729}
+  - component: {fileID: 4608998762244669444}
   m_Layer: 7
   m_Name: Shark
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4101068263211059
 Transform:
@@ -537,7 +538,7 @@ Transform:
   - {fileID: 4565107633088886}
   - {fileID: 4189027699325802}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!65 &65590405196248429
 BoxCollider:
@@ -558,8 +559,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.17, z: 5.51}
-  m_Center: {x: 0, y: 0.54, z: -2.82}
+  m_Size: {x: 1, y: 2.17, z: 5.4744577}
+  m_Center: {x: 0, y: 0.53999996, z: -2.837771}
 --- !u!54 &54887563586901842
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -645,6 +646,24 @@ MonoBehaviour:
   - PlayerWeapon
   - CannonBall
   invisibleWallPrefab: {fileID: 2526948148950268763, guid: d116edc2dc9e1c14b982744dde4cd1b8, type: 3}
+--- !u!114 &4608998762244669444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649553414575515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97add66208b767a4096223fbfbe9a654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefabs: {fileID: 2623841868153977748, guid: 36e7e158141412c4886ee717f46f92ad, type: 3}
+  spawnRate: 0.2
+  numCoin: 10
+  spawnPosition: {x: 0, y: 0, z: 0}
+  isSpawnCoin: 0
+  manager: {fileID: 0}
 --- !u!1 &1686451754807049
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,8 +779,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0022241129
-  m_Center: {x: -0.0021492296, y: -0.00535353, z: -0.000005303387}
+  m_Radius: 0.002791447
+  m_Center: {x: -0.002434752, y: -0.0053535383, z: 0.000059637034}
 --- !u!114 &7551159381650083247
 MonoBehaviour:
   m_ObjectHideFlags: 0

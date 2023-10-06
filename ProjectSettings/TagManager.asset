@@ -25,8 +25,8 @@ TagManager:
   - Tile
   - Weapon
   - EnemyCollider
-  - 
-  - 
+  - Turret
+  - Placement
   - 
   - 
   - 
