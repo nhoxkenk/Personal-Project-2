@@ -18,6 +18,13 @@ public class Tile : MonoBehaviour
 
     private float prevHealthAmount;
 
+    public MeshRenderer grassRenderer;
+
+    [SerializeField] private Material verySmallCracked;
+    [SerializeField] private Material smallCracked;
+    [SerializeField] private Material mediumCracked;
+    [SerializeField] private Material largeCracked;
+
     private void Start()
     {
         health = GetComponent<TileHealth>();
@@ -32,6 +39,7 @@ public class Tile : MonoBehaviour
         }
         if (health.amount != prevHealthAmount)
         {
+            UpdateGroundCracks(health.amount);
             prevHealthAmount = health.amount;
         }
     }
@@ -48,6 +56,18 @@ public class Tile : MonoBehaviour
             Destroy(gameObject);
             Destroy(tileObject);
         }
+    }
+
+    private void UpdateGroundCracks(float healthAmount)
+    {
+        Material material = verySmallCracked;
+        material = ((healthAmount == health.maxHealth) ? verySmallCracked : ((healthAmount >= 75f) ? smallCracked : ((healthAmount >= 50f) ? mediumCracked : ((!(healthAmount >= 25f)) ? largeCracked : largeCracked))));
+        grassRenderer.sharedMaterial = material;
+    }
+
+    public float Health()
+    {
+        return prevHealthAmount;
     }
 
 }

@@ -12,6 +12,7 @@ TagManager:
   - PlayerWeapon
   - Turret
   - CannonBall
+  - TileObject
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - EnemyCollider
   - Turret
   - Placement
-  - 
+  - TileObject
   - 
   - 
   - 

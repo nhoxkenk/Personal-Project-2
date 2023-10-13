@@ -36,6 +36,7 @@ public class Spear : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && canAttack)
         {
+            FindObjectOfType<AudioManager>().Play("Woop");
             canAttack = false;
             attackTimer = 0f;
             animator.Play("Spear_shot");

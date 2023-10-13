@@ -42,6 +42,7 @@ public class TileHealth : MonoBehaviour
         {
             if (other.CompareTag(text))
             {
+                FindObjectOfType<AudioManager>().Play("Crunch");
                 Damage component2 = other.transform.GetComponent<Damage>();
                 TakeDamage(component2.amount);
             }

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI coinText;
 
     private System.Random random = new System.Random();
-    private int coin = 0;
+    public int coin = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
                 Tile tile = lastTilesTouched[num];
                 if (tile != null)
                 {
-                    vector = new Vector3(tile.transform.position.x, 0.362f, tile.transform.position.z);
+                    vector = new Vector3(tile.transform.position.x, 0.34f, tile.transform.position.z);
                     flag = true;
                 }
                 num--;
@@ -55,11 +55,12 @@ public class GameManager : MonoBehaviour
     public List<Vector3> GetLandTileCoordinates()
     {
         List<Vector3> list = new List<Vector3>();
-        GameObject[] tiles = GameObject.FindObjectsOfType<GameObject>();
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
 
         foreach (GameObject tile in tiles)
         {
-            Vector3 tilePos = new Vector3(tile.transform.position.x, 0.362f, tile.transform.position.z);
+            Transform tileTransform = tile.transform;
+            Vector3 tilePos = new Vector3(tileTransform.position.x, 0.34f, tileTransform.position.z);
             list.Add(tilePos);
         }
 
@@ -69,6 +70,12 @@ public class GameManager : MonoBehaviour
     public void GetCoin(int amount)
     {
         coin += amount;
+        coinText.text = $"{coin}";
+    }
+
+    public void SetCoin(int amount)
+    {
+        coin -= amount;
         coinText.text = $"{coin}";
     }
 

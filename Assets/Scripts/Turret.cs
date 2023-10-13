@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,17 +6,29 @@ public class Turret : MonoBehaviour
 {
     [SerializeField] GameObject arrowPrefab;
     [SerializeField] float shootingInterval = 1.0f;
-    [SerializeField] float shootingRange = 5f;
+    [SerializeField] float shootingRange = 10f;
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] Transform partRotate;
 
+    private Animator animator;
     private List<GameObject> enemies = new List<GameObject>();
     private float nextShotTime;
     private float scanRadius = 5f;
     GameObject nearestEnemy;
+    private bool isPlace = true;
+    private bool hasDelayed = false;
+    private float delayTimer = 1.0f;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        FindObjectOfType<AudioManager>().Play("PlaceTurret");
+    }
 
     private void Update()
     {
+        Place();
+
         detectedEnemies();
 
         nearestEnemy = GetNearestEnemy();
@@ -26,24 +38,25 @@ public class Turret : MonoBehaviour
             return;
                 
         }
-
-        Vector3 direction = nearestEnemy.transform.position - transform.position;
-
-        //direction.y = 0;
-
-        if (!nearestEnemy.GetComponent<EnemyMovement>().isDead)
+        else
         {
-            if (Time.time > nextShotTime && direction.magnitude <= shootingRange)
+            Vector3 direction = nearestEnemy.transform.position - transform.position;
+
+            if (!nearestEnemy.GetComponent<EnemyMovement>().isDead)
             {
-                ShootBullet(nearestEnemy.transform, direction);
-                nextShotTime = Time.time + shootingInterval;
+                if (Time.time > nextShotTime && direction.magnitude <= shootingRange && !isPlace)
+                {
+                    FindObjectOfType<AudioManager>().Play("TurretShoot");
+                    ShootBullet(nearestEnemy.transform, direction);
+                    nextShotTime = Time.time + shootingInterval;
+                }
+
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                Vector3 rotation = lookRotation.eulerAngles;
+                partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
             }
-
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            Vector3 rotation = lookRotation.eulerAngles;
-            partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
         }
-
+        
     }
 
     void detectedEnemies()
@@ -57,6 +70,20 @@ public class Turret : MonoBehaviour
             if (col.CompareTag("Enemy"))
             {
                 enemies.Add(col.gameObject);
+            }
+        }
+    }
+
+    void Place()
+    {
+        if (!hasDelayed)
+        {
+            delayTimer -= Time.deltaTime;
+
+            if (delayTimer <= 0)
+            {
+                isPlace = false;
+                hasDelayed = true;
             }
         }
     }

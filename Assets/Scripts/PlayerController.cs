@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
             placementSystem.StartPlacement(0);
+        if (Input.GetKeyDown(KeyCode.E))
+            placementSystem.StartPlacement(1);
     }
 
     private void FixedUpdate()

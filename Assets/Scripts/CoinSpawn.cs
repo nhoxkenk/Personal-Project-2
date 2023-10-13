@@ -8,14 +8,17 @@ public class CoinSpawn : MonoBehaviour
     public float spawnRate = 0.2f;
     public int numCoin = 10;
     public Vector3 spawnPosition;
+    public Vector3 target;
     public bool isSpawnCoin;
     public GameManager manager;
+    
     private float timeSinceLastSpawn;
     private int coinSpawned;
 
     // Start is called before the first frame update
     void Start()
     {
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         coinSpawned = 0;
         timeSinceLastSpawn = 0;
     }

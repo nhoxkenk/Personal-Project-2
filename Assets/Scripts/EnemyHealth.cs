@@ -52,6 +52,7 @@ public class EnemyHealth : MonoBehaviour
             if (other.CompareTag(text))
             {
                 Damage component = other.GetComponent<Damage>();
+                FindObjectOfType<AudioManager>().Play("Stab");
                 TakeDamage(component.amount);
             }
         }
