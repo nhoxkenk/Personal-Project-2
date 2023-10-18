@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         Quaternion b = Quaternion.Euler(0f, y, 0f);
         graphics.transform.rotation = Quaternion.Slerp(graphics.transform.rotation, b, rotationSpeed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Q))
             placementSystem.StartPlacement(0);
         if (Input.GetKeyDown(KeyCode.E))
             placementSystem.StartPlacement(1);

@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
     //public TileHealth health;
 
     private bool needsToUpdateCracks;
-
+    
     private float prevHealthAmount;
 
     public MeshRenderer grassRenderer;
@@ -25,9 +25,12 @@ public class Tile : MonoBehaviour
     [SerializeField] private Material mediumCracked;
     [SerializeField] private Material largeCracked;
 
+    private GameManager gameManager;
+
     private void Start()
     {
         health = GetComponent<TileHealth>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         prevHealthAmount = health.amount;
     }
 
@@ -53,6 +56,7 @@ public class Tile : MonoBehaviour
             component.isAttacking = false;
             attacker = null;
             isBeingAttacked = false;
+            gameManager.TitleDestroyed();
             Destroy(gameObject);
             Destroy(tileObject);
         }

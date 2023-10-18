@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    [SerializeField] GameObject arrowPrefab;
-    [SerializeField] float shootingInterval = 1.0f;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] float shootingInterval = 2.0f;
     [SerializeField] float shootingRange = 10f;
     [SerializeField] Transform bulletSpawnPoint;
     [SerializeField] Transform partRotate;
+    [SerializeField]
+    private float bulletSpeed = 20f;
+
 
     private Animator animator;
     private List<GameObject> enemies = new List<GameObject>();
@@ -33,10 +36,10 @@ public class Turret : MonoBehaviour
 
         nearestEnemy = GetNearestEnemy();
 
-        if(nearestEnemy == null)
+        if (nearestEnemy == null)
         {
             return;
-                
+
         }
         else
         {
@@ -56,7 +59,7 @@ public class Turret : MonoBehaviour
                 partRotate.rotation = Quaternion.Euler(0, rotation.y, 0);
             }
         }
-        
+
     }
 
     void detectedEnemies()
@@ -93,11 +96,11 @@ public class Turret : MonoBehaviour
         GameObject nearestEnemy = null;
         float nearestEnemyDistance = float.MaxValue;
 
-        foreach(GameObject enemy in enemies)
+        foreach (GameObject enemy in enemies)
         {
             float distance = Vector3.Distance(enemy.transform.position, transform.position);
 
-            if(distance < nearestEnemyDistance)
+            if (distance < nearestEnemyDistance)
             {
                 nearestEnemy = enemy;
                 nearestEnemyDistance = distance;
@@ -109,12 +112,7 @@ public class Turret : MonoBehaviour
 
     void ShootBullet(Transform target, Vector3 direction)
     {
-        GameObject bulletGO = Instantiate(arrowPrefab, bulletSpawnPoint.position, Quaternion.LookRotation(direction));
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-        if(bullet != null)
-        {
-            bullet.Seek(target);
-        }
+        Object.Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>().Shoot(direction.normalized, bulletSpeed);
         //arrow.transform.Translate(direction.normalized * Time.deltaTime * 70, Space.World);
     }
 
@@ -124,4 +122,5 @@ public class Turret : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, scanRadius);
     }
 
+    
 }

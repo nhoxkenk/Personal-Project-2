@@ -7,20 +7,46 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public TextMeshProUGUI coinText;
+    public int coin = 0;
+    public GameObject gameOverUI;
+
 
     private System.Random random = new System.Random();
-    public int coin = 0;
+    private static bool isGameOver;
+    private int tileRemaining;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        isGameOver = false;
+        tileRemaining = GameObject.FindGameObjectsWithTag("Tile").Length;
+        Debug.Log(tileRemaining);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isGameOver)
+        {
+            return;
+        }
 
+        if (tileRemaining <= 0 || Input.GetKeyDown(KeyCode.H))
+        {
+            EndGame();
+        }
+    }
+
+    public void TitleDestroyed()
+    {
+        tileRemaining -= 1;
+        Debug.Log(tileRemaining);
+    }
+
+    public void EndGame()
+    {
+        gameOverUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
     public void SpawnPlayer(List<Tile> lastTilesTouched = null)

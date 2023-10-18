@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -8,9 +9,13 @@ public class EnemyHealth : MonoBehaviour
 
     public float amount;
 
+    public Image healthBar;
+
     public string[] damageTags;
 
     public GameObject invisibleWallPrefab;
+
+    public GameObject healthBarComponent;
 
     private EnemyMovement enemy;
 
@@ -18,11 +23,13 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         amount = maxHealth;
+        healthBar.fillAmount = amount/maxHealth;
         enemy = GetComponent<EnemyMovement>();
     }
     public void TakeDamage(float amount)
     {
         this.amount -= amount;
+        healthBar.fillAmount = this.amount/ maxHealth;
         if (this.amount <= 0f)
         {
             Die();
@@ -35,6 +42,7 @@ public class EnemyHealth : MonoBehaviour
         if (component != null)
         {
             component.Die();
+            healthBarComponent.SetActive(false);
             GetComponent<Animator>().SetTrigger("Die");
             Object.Destroy(base.gameObject, 3f);
         }

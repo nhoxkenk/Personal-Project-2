@@ -11,6 +11,8 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] GameObject mouseIndicator, cellIndicator;
     [SerializeField] InputManager inputManager;
     [SerializeField] Grid grid;
+    [SerializeField]
+    private GameObject[] previewObject;
 
     [SerializeField] private ObjectsDatabaseSO database;
     private int selectedObjectIndex = -1;
@@ -19,6 +21,8 @@ public class PlacementSystem : MonoBehaviour
 
     private bool canPlace = false;
     private GameManager gameManager;
+
+    [SerializeField] private PreviewSystem previewSystem;
 
     private void Start()
     {
@@ -38,14 +42,16 @@ public class PlacementSystem : MonoBehaviour
         if(selectedObjectIndex == 0)
         {
             gridVisulization.SetActive(true);
-            cellIndicator.SetActive(true);
+            //cellIndicator.SetActive(true);
+            previewSystem.StartShowingPlacementPreview(previewObject[selectedObjectIndex]);
             inputManager.OnClicked += PlaceStructure;
             inputManager.OnExit += StopPlacement;
         }
         if( selectedObjectIndex == 1)
         {
             gridVisulization.SetActive(true);
-            cellIndicator.SetActive(true);
+            //cellIndicator.SetActive(true);
+            previewSystem.StartShowingPlacementPreview(previewObject[selectedObjectIndex]);
             inputManager.OnClicked += RepairTile;
             inputManager.OnExit += StopPlacement;
         }
@@ -55,9 +61,11 @@ public class PlacementSystem : MonoBehaviour
     {
         if(canPlace && gameManager.coin >= 10)
         {
+            FindObjectOfType<AudioManager>().Play("Hammer");
             Vector3 mousePosition = inputManager.GetSelectedMapPosition();
             mouseIndicator.transform.position = mousePosition;
             StartRepair(mouseIndicator.transform);
+            gameManager.SetCoin(10);
         }
     }
 
@@ -79,8 +87,10 @@ public class PlacementSystem : MonoBehaviour
     {
         selectedObjectIndex = -1;
         gridVisulization.SetActive(false);
-        cellIndicator.SetActive(false);
+        //cellIndicator.SetActive(false);
+        previewSystem.StopShowingPreview();
         inputManager.OnClicked -= PlaceStructure;
+        inputManager.OnClicked -= RepairTile;
         inputManager.OnExit -= StopPlacement;
     }
 
@@ -172,7 +182,8 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         mouseIndicator.transform.position = mousePosition;
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+        //cellIndicator.transform.position = grid.CellToWorld(gridPosition);
         canPlace = CheckTile(mouseIndicator.transform);
+        previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), canPlace);
     }
 }
